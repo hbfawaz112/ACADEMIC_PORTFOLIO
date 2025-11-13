@@ -9,7 +9,7 @@ For the complete guide, see [SETUP_GUIDE.md](SETUP_GUIDE.md).
 ## 1️⃣ Fork This Repository (1 minute)
 
 1. Click **"Fork"** button at the top of this page
-2. Your copy is created at `github.com/YOUR-USERNAME/MFAWAZ_PORTFOLIO`
+2. Your copy is created at `github.com/YOUR-USERNAME/`
 
 ## 2️⃣ Customize Your Content (3 minutes)
 
@@ -27,7 +27,7 @@ For the complete guide, see [SETUP_GUIDE.md](SETUP_GUIDE.md).
 
 **Change Site Header:**
 - Edit `index.html`, `publications.html`, `blog.html`
-- Find `<h1>Mohamad Fawaz</h1>` → Change to your name
+- Find `<h1>Your Name</h1>` → Change to your actual name
 - Commit each file
 
 ## 3️⃣ Enable GitHub Pages (2 minutes)
@@ -37,7 +37,7 @@ For the complete guide, see [SETUP_GUIDE.md](SETUP_GUIDE.md).
    - If you see `gh-pages` branch: Select it and save
    - If you don't: Wait for first workflow to run (Actions tab)
 3. After workflow completes, return and select `gh-pages`
-4. Your site will be at: `https://YOUR-USERNAME.github.io/MFAWAZ_PORTFOLIO/`
+4. Your site will be at: `https://YOUR-USERNAME.github.io/ACADEMIC_PORTFOLIO/`
 
 ## 4️⃣ Create Your First Post (3 minutes)
 
@@ -76,7 +76,7 @@ I'll be writing about [your topics here].
 
 Your site is live at:
 ```
-https://YOUR-USERNAME.github.io/MFAWAZ_PORTFOLIO/
+https://YOUR-USERNAME.github.io/ACADEMIC_PORTFOLIO/
 ```
 
 Share it on:
