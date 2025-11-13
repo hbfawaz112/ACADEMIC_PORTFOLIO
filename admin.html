@@ -1,0 +1,170 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Name | Admin</title>
+  <link rel="stylesheet" href="https://latex.now.sh/style.css" />
+  <style>
+    nav.site-nav {
+      display: flex;
+      gap: 1.25rem;
+      font-size: 1.05rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    nav.site-nav a {
+      font-weight: 600;
+      font-size: 1.05em;
+    }
+    button.theme-toggle {
+      border: none;
+      background: transparent;
+      font-size: 1.35rem;
+      cursor: pointer;
+      padding: 0.1rem 0.35rem;
+      line-height: 1;
+      border-radius: 999px;
+      transition: background 0.2s ease;
+    }
+    button.theme-toggle:focus-visible {
+      outline: 2px solid #666;
+      outline-offset: 2px;
+    }
+    button.theme-toggle:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+    .admin-section { margin-bottom: 2rem; }
+    .admin-section h2 { margin-bottom: 1rem; border-bottom: 2px solid #333; padding-bottom: 0.5rem; }
+    .admin-panel { gap: 1.5rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+    .admin-panel form { display: flex; flex-direction: column; gap: 1rem; }
+    .admin-panel label { font-weight: 600; }
+    .admin-panel input, .admin-panel textarea { width: 100%; padding: 0.5rem; }
+    .output-panel { border: 1px solid #999; padding: 1rem; border-radius: 0.5rem; }
+    .output-panel pre { background: rgba(0,0,0,0.1); padding: 0.5rem; overflow-x: auto; }
+    .posts-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    .posts-table th, .posts-table td { padding: 0.75rem; text-align: left; border-bottom: 1px solid #ddd; }
+    .posts-table th { background: rgba(0,0,0,0.05); font-weight: 600; }
+    .posts-table tbody tr:hover { background: rgba(0,0,0,0.02); }
+    .action-buttons { display: flex; gap: 0.5rem; }
+    .action-buttons button { padding: 0.35rem 0.75rem; font-size: 0.9rem; cursor: pointer; border: 1px solid #666; background: #fff; border-radius: 0.25rem; transition: all 0.2s; }
+    .action-buttons button:hover { background: #f0f0f0; }
+    .action-buttons button.edit-btn { border-color: #0066cc; color: #0066cc; }
+    .action-buttons button.edit-btn:hover { background: #e6f2ff; }
+    .action-buttons button.delete-btn { border-color: #cc0000; color: #cc0000; }
+    .action-buttons button.delete-btn:hover { background: #ffe6e6; }
+    .no-posts { padding: 1rem; text-align: center; color: #666; font-style: italic; }
+    .tag-pill { display: inline-block; background: rgba(0,0,0,0.1); padding: 0.2rem 0.5rem; border-radius: 0.25rem; font-size: 0.85rem; margin-right: 0.25rem; }
+    .status-message { padding: 0.75rem; margin-top: 1rem; border-radius: 0.25rem; }
+    .status-message.info { background: #e6f2ff; border: 1px solid #0066cc; color: #004080; }
+    .status-message.error { background: #ffe6e6; border: 1px solid #cc0000; color: #800000; }
+    .preview-panel { border: 1px solid #999; padding: 1.5rem; border-radius: 0.5rem; background: white; max-height: 600px; overflow-y: auto; }
+    .preview-panel h3 { margin-top: 0; border-bottom: 2px solid #333; padding-bottom: 0.5rem; }
+    .preview-content { margin-top: 1rem; min-height: 200px; }
+    .preview-empty { color: #999; font-style: italic; text-align: center; padding: 2rem; }
+    .preview-tabs { display: flex; gap: 0.5rem; margin-bottom: 1rem; border-bottom: 2px solid #ddd; }
+    .preview-tab { padding: 0.5rem 1rem; cursor: pointer; border: none; background: transparent; font-weight: 600; border-bottom: 3px solid transparent; transition: all 0.2s; }
+    .preview-tab:hover { background: rgba(0,0,0,0.05); }
+    .preview-tab.active { border-bottom-color: #0066cc; color: #0066cc; }
+  </style>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)'], ['$', '$']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body class="latex-light" data-page="admin">
+  <header>
+    <h1>Your Name - Admin</h1>
+    <nav class="site-nav">
+      <a href="index.html">About</a>
+      <a href="publications.html">Publications</a>
+      <a href="blog.html">Blog</a>
+      <a href="admin.html">Admin</a>
+      <button id="theme-toggle" type="button" class="theme-toggle" aria-label="Toggle theme" aria-pressed="false">&#9728;</button>
+    </nav>
+  </header>
+  <main id="content">
+    <!-- Existing Posts Management Section -->
+    <section class="admin-section">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+        <h2 style="margin: 0;">Manage Existing Posts</h2>
+        <button id="refresh-posts" type="button" style="padding: 0.5rem 1rem; cursor: pointer; background: #0066cc; color: white; border: none; border-radius: 0.25rem; font-weight: 600;">🔄 Refresh</button>
+      </div>
+      <div id="posts-status" class="status-message info" style="display: none; margin-bottom: 1rem;"></div>
+      <div id="posts-loading">Loading posts...</div>
+      <div id="posts-container" style="display: none;">
+        <table class="posts-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Date</th>
+              <th>Tags</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="posts-list">
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Create New Post Section -->
+    <section class="admin-section">
+      <h2>Create New Post</h2>
+      <div class="admin-panel">
+        <form id="post-form">
+          <div>
+            <label for="post-title">Title</label>
+            <input id="post-title" type="text" name="title" placeholder="Post title" required />
+          </div>
+          <div>
+            <label for="post-tags">Tags (comma-separated)</label>
+            <input id="post-tags" type="text" name="tags" placeholder="math, ai" />
+          </div>
+          <div>
+            <label for="post-summary">Summary (optional)</label>
+            <input id="post-summary" type="text" name="summary" placeholder="Brief description of the post" />
+          </div>
+          <div>
+            <label for="post-body">Markdown body</label>
+            <textarea id="post-body" name="body" rows="14" placeholder="Write your markdown here" required></textarea>
+          </div>
+          <button id="github-button" type="button">Create Post on GitHub</button>
+        </form>
+        <section class="preview-panel">
+          <div class="preview-tabs">
+            <button class="preview-tab active" data-tab="preview" type="button">👁️ Live Preview</button>
+            <button class="preview-tab" data-tab="metadata" type="button">📋 Metadata</button>
+          </div>
+          
+          <div id="preview-content-tab" class="tab-content">
+            <div id="markdown-preview" class="preview-content">
+              <div class="preview-empty">Start typing to see a live preview...</div>
+            </div>
+          </div>
+          
+          <div id="metadata-content-tab" class="tab-content" style="display: none;">
+            <p>New filename: <code id="filename-preview">post-title.md</code></p>
+            <h4>YAML frontmatter</h4>
+            <pre id="frontmatter-preview">---
+title:
+tags: []
+date:
+summary:
+---</pre>
+            <p><small>The GitHub button opens a pre-filled editor with the generated markdown.</small></p>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>&copy; <span id="year"></span> Your Name. All rights reserved.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="scripts/build.js"></script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+﻿{
+  "posts": [
+    {
+      "slug": "welcome-to-my-blog",
+      "title": "Welcome to My Portfolio",
+      "date": "2025-11-13",
+      "tags": [
+        "introduction",
+        "getting-started"
+      ],
+      "summary": "An introduction to this portfolio site and what you can find here"
+    }
+  ]
+}
