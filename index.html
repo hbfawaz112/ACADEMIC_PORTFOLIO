@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Name | About</title>
+  <link rel="stylesheet" href="https://latex.now.sh/style.css" />
+  <style>
+    nav.site-nav {
+      display: flex;
+      gap: 1.25rem;
+      font-size: 1.05rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    nav.site-nav a {
+      font-weight: 600;
+      font-size: 1.05em;
+    }
+    button.theme-toggle {
+      border: none;
+      background: transparent;
+      font-size: 1.35rem;
+      cursor: pointer;
+      padding: 0.1rem 0.35rem;
+      line-height: 1;
+      border-radius: 999px;
+      transition: background 0.2s ease;
+    }
+    button.theme-toggle:focus-visible {
+      outline: 2px solid #666;
+      outline-offset: 2px;
+    }
+    button.theme-toggle:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+  </style>
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)'], ['$', '$']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body class="latex-light" data-page="index">
+  <header>
+    <h1>Your Name</h1>
+    <nav class="site-nav">
+      <a href="index.html">About</a>
+      <a href="publications.html">Publications</a>
+      <a href="blog.html">Blog</a>
+      <button id="theme-toggle" type="button" class="theme-toggle" aria-label="Toggle theme" aria-pressed="false">&#9728;</button>
+    </nav>
+  </header>
+  <main id="content"></main>
+  <footer>
+    <p>&copy; <span id="year"></span> Your Name. All rights reserved.</p>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="scripts/build.js"></script>
+</body>
+</html>
